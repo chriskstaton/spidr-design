@@ -1,0 +1,88 @@
+:root {
+	--bg-dark: #111;
+	--text-light: #f9f9f9;
+	--accent: #10b981; /* Spidr‑style bright green */
+	--input-bg: #222;
+	--input-border: #444;
+	--error: #dc2626;
+}
+
+body,
+html,
+#root {
+	height: 100%;
+	margin: 0;
+	font-family: "Inter", sans-serif;
+}
+
+.app-container {
+	background: var(--bg-dark);
+	color: var(--text-light);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 2rem;
+}
+
+.spidr-form {
+	background: #1a1a1a;
+	padding: 2rem;
+	border-radius: 0.75rem;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+	width: 100%;
+	max-width: 400px;
+}
+
+.field {
+	margin-bottom: 1.25rem;
+}
+
+.label {
+	display: block;
+	margin-bottom: 0.5rem;
+	font-weight: 500;
+}
+
+.input {
+	width: 100%;
+	padding: 0.5rem 0.75rem;
+	background: var(--input-bg);
+	border: 1px solid var(--input-border);
+	border-radius: 0.5rem;
+	color: var(--text-light);
+	font-size: 1rem;
+}
+
+.input:focus {
+	outline: none;
+	border-color: var(--accent);
+	box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.3);
+}
+
+.input-error {
+	border-color: var(--error) !important;
+}
+
+.error-text {
+	color: var(--error);
+	font-size: 0.875rem;
+	margin-top: 0.25rem;
+	display: block;
+}
+
+.submit-button {
+	width: 100%;
+	background: var(--accent);
+	color: #fff;
+	padding: 0.75rem;
+	font-size: 1rem;
+	font-weight: 600;
+	border: none;
+	border-radius: 0.5rem;
+	cursor: pointer;
+	transition: background 0.2s ease;
+}
+
+.submit-button:hover {
+	background: #0e9f68;
+}
