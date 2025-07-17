@@ -1,18 +1,21 @@
+@import url("https://fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,700");
 :root {
-	--bg-dark: #111;
+	--bg-dark: rgb(40, 40, 40);
 	--text-light: #f9f9f9;
-	--accent: #10b981; /* Spidr‑style bright green */
+	--accent: rgba(71, 157, 175, 0.9);
 	--input-bg: #222;
 	--input-border: #444;
 	--error: #dc2626;
+	--btn-hover: #56acbd;
+	--spdr-logo: #b9bdc3;
 }
 
 body,
 html,
 #root {
-	height: 100%;
+	height: 100dvh;
 	margin: 0;
-	font-family: "Inter", sans-serif;
+	font-family: "Raleway", sans-serif;
 }
 
 .app-container {
@@ -21,36 +24,41 @@ html,
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	padding: 2rem;
+	height: 100dvh;
 }
 
 .spidr-form {
-	background: #1a1a1a;
 	padding: 2rem;
-	border-radius: 0.75rem;
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+	display: flex;
+	flex-direction: column;
+	gap: 25px;
 	width: 100%;
 	max-width: 400px;
+	z-index: 999;
+	background-color: var(--accent);
+	transition: background-color 0.5s ease-out;
 }
 
 .field {
-	margin-bottom: 1.25rem;
+	width: 80%;
+	margin: auto;
 }
 
 .label {
 	display: block;
 	margin-bottom: 0.5rem;
 	font-weight: 500;
+	text-align: center;
 }
 
 .input {
 	width: 100%;
-	padding: 0.5rem 0.75rem;
 	background: var(--input-bg);
 	border: 1px solid var(--input-border);
 	border-radius: 0.5rem;
 	color: var(--text-light);
 	font-size: 1rem;
+	text-align: center;
 }
 
 .input:focus {
@@ -65,18 +73,26 @@ html,
 
 .error-text {
 	color: var(--error);
-	font-size: 0.875rem;
+	font-size: 14px;
 	margin-top: 0.25rem;
 	display: block;
+	text-align: center;
+	font-weight: 800;
 }
 
 .submit-button {
-	width: 100%;
-	background: var(--accent);
+	width: fit-content;
+	margin: auto;
+	background-color: transparent;
+	border: 1px solid #fff !important;
+	border-radius: 0 !important;
 	color: #fff;
-	padding: 0.75rem;
-	font-size: 1rem;
-	font-weight: 600;
+	margin-top: 15px;
+	color: #fff;
+	padding: 6px 12px;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 1.42857143;
 	border: none;
 	border-radius: 0.5rem;
 	cursor: pointer;
@@ -84,5 +100,59 @@ html,
 }
 
 .submit-button:hover {
-	background: #0e9f68;
+	background-color: rgba(0, 0, 0, 0.6);
+	border: 1px solid var(--btn-hover) !important;
+	color: var(--btn-hover);
+}
+
+/* Fade out form fields and text on submission */
+.spidr-form.submitted * {
+	opacity: 0;
+	transition: opacity 0.5s ease-out;
+}
+
+.spidr-form.submitted {
+	background-color: transparent;
+}
+
+.logo-drop {
+	position: absolute;
+	top: -500px;
+	left: 50%;
+	transform: translateX(-50%);
+	animation: dropLogo 1s linear forwards;
+	z-index: 1000;
+}
+
+/* Vertical line from top to center of logo */
+.logo-line {
+	position: fixed;
+	top: -180px !important;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 1.5px;
+	background-color: var(--spdr-logo);
+	z-index: 1000;
+	height: calc(50vh - 50px);
+	animation: dropLogo 1s ease-in-out forwards;
+}
+
+/* Logo drop animation */
+@keyframes dropLogo {
+	0% {
+		top: -500px;
+		transform: translateX(-50%);
+		/* fast drop start */
+		animation-timing-function: ease-in;
+	}
+	80% {
+		top: 55%;
+		transform: translate(-50%, -50%);
+		/* bounce overshoot */
+		animation-timing-function: ease-out;
+	}
+	100% {
+		top: 50%;
+		transform: translate(-50%, -50%);
+	}
 }
