@@ -327,7 +327,7 @@ const Form = ({ onSuccess, submitted }: FormProps) => {
 			{/* Cost input with currency selector */}
 			<div className="field" key="guessCost">
 				<label className="label" htmlFor="guessCost">
-					Guess the Air Fryer Cost
+					Guess the Air Fryer Cost!
 				</label>
 				<div
 					className="currency-input"
