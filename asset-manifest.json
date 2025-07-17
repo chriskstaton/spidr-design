@@ -1,18 +1,18 @@
 {
   "files": {
     "main.css": "/spidr-design/static/css/main.afed4ad5.css",
-    "main.js": "/spidr-design/static/js/main.5e8ef971.js",
+    "main.js": "/spidr-design/static/js/main.d548aa76.js",
     "static/js/453.46ecec01.chunk.js": "/spidr-design/static/js/453.46ecec01.chunk.js",
     "static/media/brick-wall.jpg": "/spidr-design/static/media/brick-wall.dff42a7604472180de8d.jpg",
     "static/media/air-fryer.png": "/spidr-design/static/media/air-fryer.a51d6ef35562613fd1ba.png",
     "static/media/atm-pin.mp3": "/spidr-design/static/media/atm-pin.dec5d23b79c180c1a58d.mp3",
     "index.html": "/spidr-design/index.html",
     "main.afed4ad5.css.map": "/spidr-design/static/css/main.afed4ad5.css.map",
-    "main.5e8ef971.js.map": "/spidr-design/static/js/main.5e8ef971.js.map",
+    "main.d548aa76.js.map": "/spidr-design/static/js/main.d548aa76.js.map",
     "453.46ecec01.chunk.js.map": "/spidr-design/static/js/453.46ecec01.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.afed4ad5.css",
-    "static/js/main.5e8ef971.js"
+    "static/js/main.d548aa76.js"
   ]
 }
