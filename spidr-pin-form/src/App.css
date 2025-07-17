@@ -137,6 +137,14 @@ html,
 	animation: dropLogo 1s ease-in-out forwards;
 }
 
+.shake-on-hover {
+	display: inline-block;
+}
+
+.shake-on-hover:hover {
+	animation: shake 0.3s ease-in-out 1;
+}
+
 /* Logo drop animation */
 @keyframes dropLogo {
 	0% {
@@ -154,5 +162,24 @@ html,
 	100% {
 		top: 50%;
 		transform: translate(-50%, -50%);
+	}
+}
+
+/* Shake animation for AirFryer div */
+@keyframes shake {
+	0% {
+		transform: translate(0, 0);
+	}
+	25% {
+		transform: translate(-3px, 0);
+	}
+	50% {
+		transform: translate(3px, 0);
+	}
+	75% {
+		transform: translate(-1.5px, 0);
+	}
+	100% {
+		transform: translate(0, 0);
 	}
 }

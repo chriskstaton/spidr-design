@@ -5,6 +5,7 @@ import SpidrLogo from "./SpidrLogo";
 import SpidrTitle from "./SpidrTitle";
 
 import "./App.css";
+import AirFryer from "./airFryer";
 
 // Color constants
 const PARTICLE_BG_COLOR = "rgba(40,40,40)";
@@ -40,6 +41,7 @@ const App: React.FC = () => {
 			style={{ position: "relative", flexDirection: "column" }}
 		>
 			<SpidrTitle />
+			<AirFryer />
 			<Form onSuccess={() => setShowLogo(true)} submitted={showLogo} />
 			{showLogo && <SpidrLogo className="logo-drop" />}
 			<div
