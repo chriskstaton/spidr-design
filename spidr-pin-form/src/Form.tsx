@@ -1,5 +1,6 @@
 import { useState, useRef, ChangeEvent, FormEvent } from "react";
 import clsx from "clsx";
+import atmPinSound from "./sounds/atm-pin.mp3";
 
 interface FormProps {
 	onSuccess?: () => void;
@@ -27,6 +28,11 @@ const INITIAL: FormData = {
 };
 
 const Form = ({ onSuccess, submitted }: FormProps) => {
+	// Audio for PIN keypress feedback
+	const pinAudio = useRef<HTMLAudioElement>(new Audio(atmPinSound));
+	// Set volume to 40%
+	pinAudio.current.volume = 0.4;
+
 	// Keep each field in local state
 	const [data, setData] = useState<FormData>(INITIAL);
 
@@ -72,9 +78,53 @@ const Form = ({ onSuccess, submitted }: FormProps) => {
 		SEK: "kr",
 		NZD: "NZ$",
 	};
+
+	// Exchange rates relative to USD.
+	// Note: static example rates—replace or fetch dynamically for production use.
+	const EXCHANGE_RATES: Record<string, number> = {
+		USD: 1,
+		EUR: 0.92,
+		GBP: 0.81,
+		JPY: 145,
+		CAD: 1.35,
+		AUD: 1.48,
+		CHF: 0.91,
+		CNY: 7.22,
+		SEK: 10.5,
+		NZD: 1.6,
+	};
+
 	// Handler for currency dropdown
 	const handleCurrencyChange = (e: ChangeEvent<HTMLSelectElement>) => {
-		setData({ ...data, currency: e.target.value });
+		const newCurrency = e.target.value;
+		const prevCurrency = data.currency;
+		let newCost = data.guessCost;
+
+		// Attempt conversion only when a numeric cost exists and rates are defined
+		const numericCost = parseFloat(data.guessCost);
+		if (
+			!isNaN(numericCost) &&
+			EXCHANGE_RATES[prevCurrency] !== undefined &&
+			EXCHANGE_RATES[newCurrency] !== undefined
+		) {
+			// Convert original cost from previous currency to USD
+			const usdValue = numericCost / EXCHANGE_RATES[prevCurrency];
+			// Convert USD value to new currency
+			const converted = usdValue * EXCHANGE_RATES[newCurrency];
+			// Format to two decimal places
+			newCost = converted.toFixed(2);
+		}
+
+		// Update state with converted cost and selected currency
+		setData({ ...data, currency: newCurrency, guessCost: newCost });
+
+		// Clear cost error if the new value now validates
+		if (submitErrors.guessCost) {
+			const validCost = /^(\d+(\.\d{1,2})?|\.\d{1,2})$/.test(newCost);
+			if (validCost) {
+				setSubmitErrors((prev) => ({ ...prev, guessCost: false }));
+			}
+		}
 	};
 
 	// Handler for cost input: limit to two decimal places
@@ -94,16 +144,37 @@ const Form = ({ onSuccess, submitted }: FormProps) => {
 		}
 		// Update form state
 		setData({ ...data, guessCost: val });
+		// Clear cost error if it now matches allowed format
+		if (submitErrors.guessCost) {
+			const validCost = /^(\d+(\.\d{1,2})?|\.\d{1,2})$/.test(val);
+			if (validCost) {
+				setSubmitErrors((prev) => ({ ...prev, guessCost: false }));
+			}
+		}
 	};
 
 	// Handler for generic text inputs
 	const handleChange =
 		(key: keyof FormData) => (e: ChangeEvent<HTMLInputElement>) => {
 			setData({ ...data, [key]: e.target.value });
+			// Clear existing submit error if this field is now valid
+			if (submitErrors[key]) {
+				const value = e.target.value.trim();
+				const isValid =
+					key === "email"
+						? /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
+						: value.length > 0;
+				if (isValid) {
+					setSubmitErrors((prev) => ({ ...prev, [key]: false }));
+				}
+			}
 		};
 
 	// Specialized handler for PIN formatting
 	const handlePinChange = (e: ChangeEvent<HTMLInputElement>) => {
+		// Count existing digits before this input
+		const oldDigitsLength = data.pin.replace(/\D/g, "").length;
+
 		// Strip non‐digits
 		const digits = e.target.value.replace(/\D/g, "");
 
@@ -114,11 +185,27 @@ const Form = ({ onSuccess, submitted }: FormProps) => {
 		}
 		// Re‑join with dashes
 		const formatted = chunks.join("-");
+
+		// Play sound when a new digit is entered
+		const newDigitsLength = formatted.replace(/\D/g, "").length;
+		if (newDigitsLength > oldDigitsLength) {
+			// Reset playback to start so it can play again immediately
+			pinAudio.current.currentTime = 0;
+			pinAudio.current.play();
+		}
+
 		// Reset and hide error on each keystroke
 		if (pinErrorTimer.current) clearTimeout(pinErrorTimer.current);
 		setPinErrorVisible(false);
 
 		setData({ ...data, pin: formatted });
+		// Clear PIN error if now exactly 16 digits
+		if (submitErrors.pin) {
+			const digitCount = formatted.replace(/-/g, "").length;
+			if (digitCount === 16) {
+				setSubmitErrors((prev) => ({ ...prev, pin: false }));
+			}
+		}
 		// Show error if PIN invalid after user stops typing for 500ms
 		pinErrorTimer.current = setTimeout(() => {
 			if (formatted.replace(/-/g, "").length < 16) {
@@ -148,6 +235,13 @@ const Form = ({ onSuccess, submitted }: FormProps) => {
 		}
 		// Update form state
 		setData({ ...data, phone: formatted });
+		// Clear phone error if now a valid 10-digit number
+		if (submitErrors.phone) {
+			const digitsOnly = formatted.replace(/\D/g, "");
+			if (digitsOnly.length === 10) {
+				setSubmitErrors((prev) => ({ ...prev, phone: false }));
+			}
+		}
 	};
 
 	// On submit, prevent full page reload and log data to console
@@ -168,6 +262,10 @@ const Form = ({ onSuccess, submitted }: FormProps) => {
 				case "guessCost":
 					// Allow integer or decimal with one or two places
 					valid = /^(\d+(\.\d{1,2})?|\.\d{1,2})$/.test(data.guessCost);
+					break;
+				case "email":
+					// Require an '@' and a '.' in the email
+					valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email);
 					break;
 				default:
 					valid = data[key].toString().trim().length > 0;
