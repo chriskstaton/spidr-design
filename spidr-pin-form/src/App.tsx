@@ -44,6 +44,12 @@ const App: React.FC = () => {
 			<AirFryer />
 			<Form onSuccess={() => setShowLogo(true)} submitted={showLogo} />
 			{showLogo && <SpidrLogo className="logo-drop" />}
+
+			{showLogo && (
+				<footer className="thank-you-footer" style={{ zIndex: "1000" }}>
+					Thank you for your interest.
+				</footer>
+			)}
 			<div
 				style={{
 					position: "absolute",

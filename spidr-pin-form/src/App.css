@@ -145,6 +145,13 @@ html,
 	animation: shake 0.3s ease-in-out 1;
 }
 
+/* Fade-in animation for thank-you footer */
+.thank-you-footer {
+	opacity: 0;
+	/* Trigger the fade-in keyframes on mount */
+	animation: fadeInFooter 1s ease-in 1s forwards;
+}
+
 /* Logo drop animation */
 @keyframes dropLogo {
 	0% {
@@ -181,5 +188,14 @@ html,
 	}
 	100% {
 		transform: translate(0, 0);
+	}
+}
+
+@keyframes fadeInFooter {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
 	}
 }
