@@ -1,15 +1,18 @@
 {
   "files": {
-    "main.css": "/spidr-design/static/css/main.0c770e67.css",
-    "main.js": "/spidr-design/static/js/main.de0d318e.js",
+    "main.css": "/spidr-design/static/css/main.afed4ad5.css",
+    "main.js": "/spidr-design/static/js/main.5c277acd.js",
     "static/js/453.46ecec01.chunk.js": "/spidr-design/static/js/453.46ecec01.chunk.js",
+    "static/media/brick-wall.jpg": "/spidr-design/static/media/brick-wall.3e681ff59a59ce84c175.jpg",
+    "static/media/air-fryer.png": "/spidr-design/static/media/air-fryer.a51d6ef35562613fd1ba.png",
+    "static/media/atm-pin.mp3": "/spidr-design/static/media/atm-pin.dec5d23b79c180c1a58d.mp3",
     "index.html": "/spidr-design/index.html",
-    "main.0c770e67.css.map": "/spidr-design/static/css/main.0c770e67.css.map",
-    "main.de0d318e.js.map": "/spidr-design/static/js/main.de0d318e.js.map",
+    "main.afed4ad5.css.map": "/spidr-design/static/css/main.afed4ad5.css.map",
+    "main.5c277acd.js.map": "/spidr-design/static/js/main.5c277acd.js.map",
     "453.46ecec01.chunk.js.map": "/spidr-design/static/js/453.46ecec01.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.0c770e67.css",
-    "static/js/main.de0d318e.js"
+    "static/css/main.afed4ad5.css",
+    "static/js/main.5c277acd.js"
   ]
 }
