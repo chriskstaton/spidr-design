@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import ParticleGround from "particleground.ts";
 import Form from "./Form";
 import SpidrLogo from "./SpidrLogo";
-import SpidrTitle from "./spidrTitle";
+import SpidrTitle from "./SpidrTitle";
 
 import "./App.css";
 
